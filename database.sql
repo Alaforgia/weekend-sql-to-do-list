@@ -5,7 +5,13 @@
 
 CREATE TABLE "task-list" (
 	"id" SERIAL PRIMARY KEY,
-	"task" VARCHAR (30) NOT NULL,
-	"complete" VARCHAR (100) NOT NULL,
+	"task" VARCHAR (100) NOT NULL,
     "notes" VARCHAR (100)
+	"completed" BOOLEAN DEFAULT FALSE,
 );
+
+INSERT INTO "task-list"
+("task", "notes", "completed")
+
+VALUES
+('Code weekend challenge', 'Spend time coding! Remember to take breaks', 'No')
