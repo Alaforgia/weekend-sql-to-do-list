@@ -1,5 +1,4 @@
 const pg = require("pg");
-
 // database pool options
 let poolOptions = {
   database: "weekend-to-do-app",

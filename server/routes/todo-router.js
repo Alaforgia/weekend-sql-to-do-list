@@ -1,6 +1,6 @@
 const express = require("express");
 const toDoRouter = express.Router();
-
+const colors = require("colors");
 // DB CONNECTION
 const pool = require("../modules/pool");
 
@@ -11,6 +11,7 @@ toDoRouter.get("/", (req, res) => {
   pool
     .query(queryText)
     .then((result) => {
+      console.log(result.rows);
       res.send(result.rows);
     })
     .catch((error) => {
@@ -54,11 +55,11 @@ toDoRouter.put("/:id", (req, res) => {
   pool
     .query(sqlText, sqlValues)
     .then((result) => {
-      console.log("PUT WORKS", result);
+      console.log(colors.rainbow("PUT WORKS.rainbow"), result);
       res.sendStatus(200);
     })
     .catch((err) => {
-      console.log("PUT ERROR", err);
+      console.log(colors.error("PUT ERROR.red"), err);
       res.sendStatus(500);
     });
 });
