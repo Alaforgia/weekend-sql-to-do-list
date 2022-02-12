@@ -19,4 +19,25 @@ toDoRouter.get("/", (req, res) => {
     });
 });
 
+toDoRouter.post("/", (req, res) => {
+  const newTask = req.body;
+  console.log(newTask);
+
+  const queryText = `
+    INSERT INTO "task-list" ("task", "notes", "completed")
+    VALUES ($1, $2, $3);
+    `;
+
+  //parameterized query below, prevents SQL injection
+  pool
+    .query(queryText, [newTask.task, newTask.notes, newTask.completed])
+    .then((result) => {
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log("error querying", queryText, err);
+      res.sendStatus(500);
+    });
+});
+
 module.exports = toDoRouter;
