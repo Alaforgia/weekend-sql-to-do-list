@@ -31,7 +31,7 @@ toDoRouter.post("/", (req, res) => {
 
   //parameterized query below, prevents SQL injection
   pool
-    .query(queryText, [newTask.task, newTask.notes, newTask.completed])
+    .query(queryText, [newTask.task, newTask.notes, false])
     .then((result) => {
       res.sendStatus(201);
     })
