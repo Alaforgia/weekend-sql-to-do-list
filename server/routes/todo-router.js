@@ -63,4 +63,20 @@ toDoRouter.put("/:id", (req, res) => {
     });
 });
 
+toDoRouter.delete("/:id", (req, res) => {
+  let reqId = req.params.id;
+  console.log("DELETE ID", reqId);
+  let queryText = 'DELETE FROM "task-list" WHERE "id" = $1;';
+  pool
+    .query(queryText, [reqId])
+    .then((result) => {
+      console.log("Task deleted");
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.log("Error making database query", queryText, error);
+      res.sendStatus(500);
+    });
+});
+
 module.exports = toDoRouter;
