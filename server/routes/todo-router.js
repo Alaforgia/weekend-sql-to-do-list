@@ -24,7 +24,7 @@ toDoRouter.post("/", (req, res) => {
   console.log(newTask);
 
   const queryText = `
-    INSERT INTO "task-list" ("task", "notes", "completed")
+    INSERT INTO "task-list" ("task", "notes", "isCompleted")
     VALUES ($1, $2, $3);
     `;
 
@@ -36,6 +36,29 @@ toDoRouter.post("/", (req, res) => {
     })
     .catch((err) => {
       console.log("error querying", queryText, err);
+      res.sendStatus(500);
+    });
+});
+
+toDoRouter.put("/:id", (req, res) => {
+  let idToUpdate = req.params.id;
+  console.log(idToUpdate);
+  console.log(req.body);
+
+  let sqlText = `
+  UPDATE "task-list"
+  SET "isCompleted" = TRUE
+  WHERE "id" = $1;
+  `;
+  let sqlValues = [idToUpdate];
+  pool
+    .query(sqlText, sqlValues)
+    .then((result) => {
+      console.log("PUT WORKS", result);
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.log("PUT ERROR", err);
       res.sendStatus(500);
     });
 });

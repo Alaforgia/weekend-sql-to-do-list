@@ -7,7 +7,7 @@ CREATE TABLE "task-list" (
 	"id" SERIAL PRIMARY KEY,
 	"task" VARCHAR (100) NOT NULL,
     "notes" VARCHAR (100),
-	"completed" BOOLEAN DEFAULT FALSE,
+	"isCompleted" BOOLEAN DEFAULT FALSE,
 );
 
 INSERT INTO "task-list"
