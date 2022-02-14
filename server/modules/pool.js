@@ -32,6 +32,15 @@
  database: 'prime_app',
  change `prime_app` to the name of your database, and you should be all set!
 */
+/**
+ * You'll need to use environment variables in order to deploy your
+ * pg-pool configuration to Heroku.
+ * It will look something like this:
+ **/
+/* the only line you likely need to change is
+ database: 'prime_app',
+ change `prime_app` to the name of your database, and you should be all set!
+*/
 
 const pg = require("pg");
 const url = require("url");
@@ -74,4 +83,4 @@ pool.on("error", (err) => {
   process.exit(-1);
 });
 
-module.exports = toDoPool;
+module.exports = pool;
