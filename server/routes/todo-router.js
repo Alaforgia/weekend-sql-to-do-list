@@ -55,7 +55,7 @@ toDoRouter.put("/:id", (req, res) => {
   pool
     .query(sqlText, sqlValues)
     .then((result) => {
-      console.log(colors.rainbow("PUT WORKS.rainbow"), result);
+      console.log("PUT WORKS", result);
       res.sendStatus(200);
     })
     .catch((err) => {
