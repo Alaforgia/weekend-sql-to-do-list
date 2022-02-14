@@ -9,9 +9,7 @@ function setupClickListeners() {
     createTask($("#newTask").val(), $("#newNote").val());
   });
   $("#viewList").on("click", ".deleteBtn", deleteTask);
-  // $(".deleteBtn").on("click", () => {
-  //   deleteTask();
-  //   });
+  $("#viewList").on("click", ".isCompletedBtn", completeTask);
 }
 
 function getTasks() {
@@ -24,15 +22,27 @@ function getTasks() {
     .then(function (toDos) {
       console.log(toDos);
       toDos.forEach((toDo) => {
-        $("#viewList").append(`
-        <tr id="row-${toDo.id}">
-        <td>${toDo.task}</td>
-        <td>${toDo.notes}</td>
-        <td>${toDo.isCompleted}</td>
-        <td><button class="isCompletedBtn" data-id='${toDo.id}'>Complete</button></td>
-        <td><button class="deleteBtn" data-id='${toDo.id}'>Delete</button></td>
-        </tr>
-        `);
+        if (toDo.isCompleted) {
+          $("#viewList").append(`
+              <tr class="${toDo.isCompleted ? "is-completed" : ""}" id="row-${toDo.id}">
+      
+              <td>${toDo.task}</td>
+              <td>${toDo.notes}</td>
+              <td><span>Completed</span></td>
+              <td><button class="deleteBtn" data-id='${toDo.id}'>Delete</button></td>
+              </tr>
+              `);
+        } else {
+          $("#viewList").append(`
+            <tr class="${toDo.isCompleted ? "is-completed" : ""}" id="row-${toDo.id}">
+    
+            <td>${toDo.task}</td>
+            <td>${toDo.notes}</td>
+            <td><button class="isCompletedBtn" data-id='${toDo.id}'>Complete</button></td>
+            <td><button class="deleteBtn" data-id='${toDo.id}'>Delete</button></td>
+            </tr>
+            `);
+        }
       });
     })
     .catch(function (error) {
@@ -73,5 +83,21 @@ function deleteTask() {
     })
     .catch(function (error) {
       console.log("Delete Error", error);
+    });
+}
+
+function completeTask() {
+  let taskId = $(this).data().id;
+  console.log("Complete button works");
+  $.ajax({
+    method: "PUT",
+    url: `/weekend-to-do-app/${taskId}`,
+  })
+    .then(function (response) {
+      console.log("Complete", response);
+      getTasks();
+    })
+    .catch(function (error) {
+      console.log("PUT error", error);
     });
 }
