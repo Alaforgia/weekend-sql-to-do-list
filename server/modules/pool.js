@@ -1,7 +1,7 @@
 const pg = require("pg");
 // database pool options
 let poolOptions = {
-  database: "weekend-to-do-app",
+  database: process.env.DATABASE_NAME || "weekend-to-do-app", // CHANGE THIS LINE to match you local database name!
   host: "localhost",
   max: 10,
   // database on port 5432
